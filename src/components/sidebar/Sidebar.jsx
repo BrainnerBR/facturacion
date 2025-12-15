@@ -10,11 +10,11 @@ const Sidebar = () => {
   const currentPath = location.pathname;
 
   const navItems = [
-    {path: '/facturacion', label: 'Guías de Entrega', icon: <FaFileInvoice className='w-5 h-5 text-text' />},
+    { path: '/facturacion', label: 'Guías de Entrega', icon: <FaFileInvoice className='w-5 h-5 text-text' />},
     { path: '/dashboard', label: 'Dashboard', icon: <BsGraphUpArrow className="w-5 h-5 text-text" /> },
-    { path: '/proyectos', label: 'Proyectos', icon: <FaProjectDiagram className="w-5 h-5 text-text" /> },
+    { path: '/proyectos', label: 'Proyectos', icon: <FaProjectDiagram className="w-5 h-5 text-text" />, disabled: true },
     { path: '/inventario', label: 'Inventario', icon: <FaBoxOpen className="w-5 h-5 text-text" /> },
-    { path: '/visitas', label: 'Visitas', icon: <FaMapMarkerAlt className="w-5 h-5 text-text" /> },
+    { path: '/visitas', label: 'Visitas', icon: <FaMapMarkerAlt className="w-5 h-5 text-text" />, disabled: true },
   ];
 
 
@@ -29,11 +29,14 @@ const Sidebar = () => {
       {navItems.map((item) => (
         <li key={item.path}>
           <Link
-            to={item.path}
+            to={item.disabled ? '#' : item.path}
+            onClick={(e) => item.disabled && e.preventDefault()}
             className={`flex items-center p-5 rounded-lg transition duration-300 ease-in-out ${
-              currentPath.startsWith(item.path)
-                ? 'bg-active text-text'
-                : 'hover:bg-hover hover:text-text'
+              item.disabled 
+                ? 'opacity-50 cursor-not-allowed' 
+                : currentPath.startsWith(item.path)
+                  ? 'bg-active text-text'
+                  : 'hover:bg-hover hover:text-text'
             }`}
           >
             {item.icon}
